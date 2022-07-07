@@ -1,0 +1,15 @@
+pre.slate-rte {
+  padding: 10px;
+  background-color: #eee;
+  white-space: pre-wrap;
+}
+
+:not(pre.slate-rte) > code.slate-rte {
+  font-family: monospace;
+  background-color: #eee;
+  padding: 3px;
+}
+
+/* [data-slate-editor] > * + * {
+  margin-top: 1em;
+} */
