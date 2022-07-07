@@ -116,85 +116,25 @@ const FormatListBulleted = ({ className, ...props }: { className: string }) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
-      fill="currentColor"
       className={className}
+      fill="currentColor"
       {...props}
     >
-      <path d="M88 48C101.3 48 112 58.75 112 72V120C112 133.3 101.3 144 88 144H40C26.75 144 16 133.3 16 120V72C16 58.75 26.75 48 40 48H88zM480 64C497.7 64 512 78.33 512 96C512 113.7 497.7 128 480 128H192C174.3 128 160 113.7 160 96C160 78.33 174.3 64 192 64H480zM480 224C497.7 224 512 238.3 512 256C512 273.7 497.7 288 480 288H192C174.3 288 160 273.7 160 256C160 238.3 174.3 224 192 224H480zM480 384C497.7 384 512 398.3 512 416C512 433.7 497.7 448 480 448H192C174.3 448 160 433.7 160 416C160 398.3 174.3 384 192 384H480zM16 232C16 218.7 26.75 208 40 208H88C101.3 208 112 218.7 112 232V280C112 293.3 101.3 304 88 304H40C26.75 304 16 293.3 16 280V232zM88 368C101.3 368 112 378.7 112 392V440C112 453.3 101.3 464 88 464H40C26.75 464 16 453.3 16 440V392C16 378.7 26.75 368 40 368H88z" />
-    </svg>
-  );
-};
-
-const FormatALighLeft = ({ className, ...props }: { className: string }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 448 512"
-      fill="currentColor"
-      className={className}
-      {...props}
-    >
-      <path d="M256 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H256C273.7 32 288 46.33 288 64C288 81.67 273.7 96 256 96zM256 352H32C14.33 352 0 337.7 0 320C0 302.3 14.33 288 32 288H256C273.7 288 288 302.3 288 320C288 337.7 273.7 352 256 352zM0 192C0 174.3 14.33 160 32 160H416C433.7 160 448 174.3 448 192C448 209.7 433.7 224 416 224H32C14.33 224 0 209.7 0 192zM416 480H32C14.33 480 0 465.7 0 448C0 430.3 14.33 416 32 416H416C433.7 416 448 430.3 448 448C448 465.7 433.7 480 416 480z" />
-    </svg>
-  );
-};
-
-const FormatAlignCenter = ({ className, ...props }: { className: string }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 448 512"
-      fill="currentColor"
-      className={className}
-      {...props}
-    >
-      <path d="M320 96H128C110.3 96 96 81.67 96 64C96 46.33 110.3 32 128 32H320C337.7 32 352 46.33 352 64C352 81.67 337.7 96 320 96zM416 224H32C14.33 224 0 209.7 0 192C0 174.3 14.33 160 32 160H416C433.7 160 448 174.3 448 192C448 209.7 433.7 224 416 224zM0 448C0 430.3 14.33 416 32 416H416C433.7 416 448 430.3 448 448C448 465.7 433.7 480 416 480H32C14.33 480 0 465.7 0 448zM320 352H128C110.3 352 96 337.7 96 320C96 302.3 110.3 288 128 288H320C337.7 288 352 302.3 352 320C352 337.7 337.7 352 320 352z" />
-    </svg>
-  );
-};
-
-const FormatAlignRight = ({ className, ...props }: { className: string }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 448 512"
-      fill="currentColor"
-      className={className}
-      {...props}
-    >
-      <path d="M416 96H192C174.3 96 160 81.67 160 64C160 46.33 174.3 32 192 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96zM416 352H192C174.3 352 160 337.7 160 320C160 302.3 174.3 288 192 288H416C433.7 288 448 302.3 448 320C448 337.7 433.7 352 416 352zM0 192C0 174.3 14.33 160 32 160H416C433.7 160 448 174.3 448 192C448 209.7 433.7 224 416 224H32C14.33 224 0 209.7 0 192zM416 480H32C14.33 480 0 465.7 0 448C0 430.3 14.33 416 32 416H416C433.7 416 448 430.3 448 448C448 465.7 433.7 480 416 480z" />
-    </svg>
-  );
-};
-
-const FormatAlignJustify = ({ className, ...props }: { className: string }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 448 512"
-      fill="currentColor"
-      className={className}
-      {...props}
-    >
-      <path d="M416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96zM416 352H32C14.33 352 0 337.7 0 320C0 302.3 14.33 288 32 288H416C433.7 288 448 302.3 448 320C448 337.7 433.7 352 416 352zM0 192C0 174.3 14.33 160 32 160H416C433.7 160 448 174.3 448 192C448 209.7 433.7 224 416 224H32C14.33 224 0 209.7 0 192zM416 480H32C14.33 480 0 465.7 0 448C0 430.3 14.33 416 32 416H416C433.7 416 448 430.3 448 448C448 465.7 433.7 480 416 480z" />
+      <path d="M16 96C16 69.49 37.49 48 64 48C90.51 48 112 69.49 112 96C112 122.5 90.51 144 64 144C37.49 144 16 122.5 16 96zM480 64C497.7 64 512 78.33 512 96C512 113.7 497.7 128 480 128H192C174.3 128 160 113.7 160 96C160 78.33 174.3 64 192 64H480zM480 224C497.7 224 512 238.3 512 256C512 273.7 497.7 288 480 288H192C174.3 288 160 273.7 160 256C160 238.3 174.3 224 192 224H480zM480 384C497.7 384 512 398.3 512 416C512 433.7 497.7 448 480 448H192C174.3 448 160 433.7 160 416C160 398.3 174.3 384 192 384H480zM16 416C16 389.5 37.49 368 64 368C90.51 368 112 389.5 112 416C112 442.5 90.51 464 64 464C37.49 464 16 442.5 16 416zM112 256C112 282.5 90.51 304 64 304C37.49 304 16 282.5 16 256C16 229.5 37.49 208 64 208C90.51 208 112 229.5 112 256z" />
     </svg>
   );
 };
 
 const allIcons: Record<string, any> = {
-  format_bold: <FormatBold className="w-5 h-5" />,
-  format_italic: <FormatItalic className="w-5 h-5" />,
-  format_underlined: <FormatUnderlined className="w-5 h-5" />,
-  code: <Code className="w-5 h-5" />,
-  looks_one: <LooksOne className="w-5 h-5" />,
-  looks_two: <LooksTwo className="w-5 h-5" />,
-  format_quote: <FormatQuote className="w-5 h-5" />,
-  format_list_numbered: <FormatListNumbered className="w-5 h-5" />,
-  format_list_bulleted: <FormatListBulleted className="w-5 h-5" />,
-  format_align_left: <FormatALighLeft className="w-5 h-5" />,
-  format_align_center: <FormatAlignCenter className="w-5 h-5" />,
-  format_align_right: <FormatAlignRight className="w-5 h-5" />,
-  format_align_justify: <FormatAlignJustify className="w-5 h-5" />,
+  format_bold: <FormatBold className="w-4 h-4" />,
+  format_italic: <FormatItalic className="w-4 h-4" />,
+  format_underlined: <FormatUnderlined className="w-4 h-4" />,
+  code: <Code className="w-4 h-4" />,
+  looks_one: <LooksOne className="w-4 h-4" />,
+  looks_two: <LooksTwo className="w-4 h-4" />,
+  format_quote: <FormatQuote className="w-4 h-4" />,
+  format_list_numbered: <FormatListNumbered className="w-4 h-4" />,
+  format_list_bulleted: <FormatListBulleted className="w-4 h-4" />,
 };
 
 export const Button = React.forwardRef(
@@ -210,24 +150,14 @@ export const Button = React.forwardRef(
         reversed: boolean;
       } & BaseProps
     >,
-    ref: Ref<HTMLSpanElement>
+    ref: Ref<HTMLButtonElement>
   ) => (
-    <span
+    <button
       {...props}
       ref={ref}
-      className={cx(
-        className,
-        css`
-          cursor: pointer;
-          color: ${reversed
-            ? active
-              ? "white"
-              : "#aaa"
-            : active
-            ? "black"
-            : "#ccc"};
-        `
-      )}
+      className={`cursor-pointer p-1.5 ${
+        active ? "text-gray-900 font-bold" : "text-gray-400"
+      }`}
     />
   )
 );
@@ -289,27 +219,9 @@ export const EditorValue = React.forwardRef(
   }
 );
 
-export const Icon = React.forwardRef(
-  (
-    { className, icon, ...props }: PropsWithChildren<BaseProps>,
-    ref: Ref<HTMLSpanElement>
-  ) => {
-    return (
-      <span
-        {...props}
-        ref={ref}
-        className={cx(
-          css`
-            font-size: 18px;
-            vertical-align: text-bottom;
-          `
-        )}
-      >
-        {allIcons[icon]}
-      </span>
-    );
-  }
-);
+export const Icon = ({ icon, ...props }: PropsWithChildren<BaseProps>) => {
+  return <div {...props}>{allIcons[icon]}</div>;
+};
 
 export const Instruction = React.forwardRef(
   (
@@ -362,16 +274,3 @@ export const Portal = ({ children }: { children: React.ReactNode }) => {
     ? ReactDOM.createPortal(children, document.body)
     : null;
 };
-
-export const Toolbar = React.forwardRef(
-  (
-    { className, ...props }: PropsWithChildren<BaseProps>,
-    ref: Ref<HTMLDivElement>
-  ) => (
-    <Menu
-      {...props}
-      ref={ref}
-      className="px-2 py-3 border flex items-center bg-gray-100"
-    />
-  )
-);

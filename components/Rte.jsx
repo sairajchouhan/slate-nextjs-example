@@ -10,7 +10,7 @@ import {
 } from "slate";
 import { withHistory } from "slate-history";
 
-import { Button, Icon, Toolbar } from "./RteComponents";
+import { Button, Icon } from "./RteComponents";
 
 const HOTKEYS = {
   "mod+b": "bold",
@@ -32,24 +32,16 @@ const RichTextExample = () => {
 
   return (
     <Slate editor={editor} value={initialValue}>
-      <Toolbar>
-        <MarkButton format="bold" icon="format_bold" />
-        <MarkButton format="italic" icon="format_italic" />
-        {/* <MarkButton format="code" icon="code" /> */}
-        <BlockButton format="code-block" icon="code" />
-        <BlockButton format="heading-one" icon="looks_one" />
-        <BlockButton format="heading-two" icon="looks_two" />
-        <BlockButton format="block-quote" icon="format_quote" />
-        <BlockButton format="numbered-list" icon="format_list_numbered" />
-        <BlockButton format="bulleted-list" icon="format_list_bulleted" />
-      </Toolbar>
-      <div className="border-l border-b border-r">
+      {/* <div className="absolute p-2 text-gray-400 focus-within:hidden">
+        Enter your
+      </div> */}
+      <div className="ring-1 ring-gray-300 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 relative">
         <Editable
-          className="min-h-[100px] max-h-[500px] overflow-scroll focus:ring-2 focus:ring-blue-500 p-2"
+          className="overflow-scroll h-[200px] p-2 border-b border-dashed border-gray-300 focus:border-blue-400"
           renderElement={renderElement}
           renderLeaf={renderLeaf}
-          autoFocus
           spellCheck={false}
+          placeholder="Enter some rich text..."
           onKeyDown={(event) => {
             for (const hotkey in HOTKEYS) {
               if (isHotkey(hotkey, event)) {
@@ -60,6 +52,22 @@ const RichTextExample = () => {
             }
           }}
         />
+        <div
+          className="flex items-center bg-gray-100 justify-end"
+          style={{
+            borderTopStyle: "dashed",
+          }}
+        >
+          <div className="flex flex-row space-x-2 px-2 py-1">
+            <MarkButton format="bold" icon="format_bold" />
+            <MarkButton format="italic" icon="format_italic" />
+            <BlockButton format="code-block" icon="code" />
+            <BlockButton format="heading-one" icon="looks_one" />
+            <BlockButton format="heading-two" icon="looks_two" />
+            <BlockButton format="numbered-list" icon="format_list_numbered" />
+            <BlockButton format="bulleted-list" icon="format_list_bulleted" />
+          </div>
+        </div>
       </div>
     </Slate>
   );
@@ -132,13 +140,12 @@ const isMarkActive = (editor, format) => {
 };
 
 const Element = ({ attributes, children, element }) => {
-  console.log(element);
   const style = { textAlign: element.align };
   switch (element.type) {
     case "code-block":
       return (
-        <pre className="bg-gray-200/50" {...attributes} style={style}>
-          <code className="font-mono w-full px-3 block text-xs py-1">
+        <pre className="bg-gray-200/70" {...attributes} style={style}>
+          <code className="font-mono w-full px-2 block text-sm py-0.5">
             {children}
           </code>
         </pre>
