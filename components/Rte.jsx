@@ -35,8 +35,8 @@ const RichTextExample = () => {
       <Toolbar>
         <MarkButton format="bold" icon="format_bold" />
         <MarkButton format="italic" icon="format_italic" />
-        <MarkButton format="underline" icon="format_underlined" />
-        <MarkButton format="code" icon="code" />
+        {/* <MarkButton format="code" icon="code" /> */}
+        <BlockButton format="code-block" icon="code" />
         <BlockButton format="heading-one" icon="looks_one" />
         <BlockButton format="heading-two" icon="looks_two" />
         <BlockButton format="block-quote" icon="format_quote" />
@@ -131,8 +131,17 @@ const isMarkActive = (editor, format) => {
 };
 
 const Element = ({ attributes, children, element }) => {
+  console.log(attributes);
   const style = { textAlign: element.align };
   switch (element.type) {
+    case "code-block":
+      return (
+        <pre className="bg-gray-200/50" {...attributes} style={style}>
+          <code className="font-mono w-full px-1 block text-xs py-1">
+            {children}
+          </code>
+        </pre>
+      );
     case "block-quote":
       return (
         <blockquote style={style} {...attributes}>
