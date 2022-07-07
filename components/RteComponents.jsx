@@ -1,15 +1,10 @@
-/* eslint-disable react/display-name */
-import React, { Ref, PropsWithChildren } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { cx, css } from "@emotion/css";
+import { useSlate } from "slate-react";
+import { Editor, Transforms, Element as SlateElement } from "slate";
 
-interface BaseProps {
-  className: string;
-  icon: string;
-  [key: string]: unknown;
-}
-
-const FormatBold = ({ className, ...props }: { className: string }) => {
+const FormatBold = ({ className, ...props }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -23,7 +18,7 @@ const FormatBold = ({ className, ...props }: { className: string }) => {
   );
 };
 
-const FormatItalic = ({ className, ...props }: { className: string }) => {
+const FormatItalic = ({ className, ...props }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +32,7 @@ const FormatItalic = ({ className, ...props }: { className: string }) => {
   );
 };
 
-const FormatUnderlined = ({ className, ...props }: { className: string }) => {
+const FormatUnderlined = ({ className, ...props }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +46,7 @@ const FormatUnderlined = ({ className, ...props }: { className: string }) => {
   );
 };
 
-const Code = ({ className, ...props }: { className: string }) => {
+const Code = ({ className, ...props }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +60,7 @@ const Code = ({ className, ...props }: { className: string }) => {
   );
 };
 
-const LooksOne = ({ className, ...props }: { className: string }) => {
+const LooksOne = ({ className, ...props }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +74,7 @@ const LooksOne = ({ className, ...props }: { className: string }) => {
   );
 };
 
-const LooksTwo = ({ className, ...props }: { className: string }) => {
+const LooksTwo = ({ className, ...props }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -93,11 +88,11 @@ const LooksTwo = ({ className, ...props }: { className: string }) => {
   );
 };
 
-const FormatQuote = ({ className, ...props }: { className: string }) => {
+const FormatQuote = ({ className, ...props }) => {
   return null;
 };
 
-const FormatListNumbered = ({ className, ...props }: { className: string }) => {
+const FormatListNumbered = ({ className, ...props }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +106,7 @@ const FormatListNumbered = ({ className, ...props }: { className: string }) => {
   );
 };
 
-const FormatListBulleted = ({ className, ...props }: { className: string }) => {
+const FormatListBulleted = ({ className, ...props }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +120,7 @@ const FormatListBulleted = ({ className, ...props }: { className: string }) => {
   );
 };
 
-const allIcons: Record<string, any> = {
+const allIcons = {
   format_bold: <FormatBold className="w-4 h-4" />,
   format_italic: <FormatItalic className="w-4 h-4" />,
   format_underlined: <FormatUnderlined className="w-4 h-4" />,
@@ -137,140 +132,287 @@ const allIcons: Record<string, any> = {
   format_list_bulleted: <FormatListBulleted className="w-4 h-4" />,
 };
 
-export const Button = React.forwardRef(
-  (
-    {
-      className,
-      active,
-      reversed,
-      ...props
-    }: PropsWithChildren<
-      {
-        active: boolean;
-        reversed: boolean;
-      } & BaseProps
-    >,
-    ref: Ref<HTMLButtonElement>
-  ) => (
-    <button
+export const Button = ({ className, active, reversed, ...props }) => (
+  <button
+    {...props}
+    className={`cursor-pointer p-1.5 ${
+      active ? "text-gray-900 font-bold" : "text-gray-400"
+    }`}
+  />
+);
+
+export const EditorValue = ({ className, value, ...props }) => {
+  const textLines = value.document.nodes
+    .map((node) => node.text)
+    .toArray()
+    .join("\n");
+  return (
+    <div
       {...props}
-      ref={ref}
-      className={`cursor-pointer p-1.5 ${
-        active ? "text-gray-900 font-bold" : "text-gray-400"
-      }`}
-    />
-  )
-);
-
-export const EditorValue = React.forwardRef(
-  (
-    {
-      className,
-      value,
-      ...props
-    }: PropsWithChildren<
-      {
-        value: any;
-      } & BaseProps
-    >,
-    ref: Ref<HTMLDivElement>
-  ) => {
-    const textLines = value.document.nodes
-      .map((node: any) => node.text)
-      .toArray()
-      .join("\n");
-    return (
+      className={cx(
+        className,
+        css`
+          margin: 30px -20px 0;
+        `
+      )}
+    >
       <div
-        ref={ref}
-        {...props}
-        className={cx(
-          className,
-          css`
-            margin: 30px -20px 0;
-          `
-        )}
+        className={css`
+          font-size: 14px;
+          padding: 5px 20px;
+          color: #404040;
+          border-top: 2px solid #eeeeee;
+          background: #f8f8f8;
+        `}
       >
-        <div
-          className={css`
-            font-size: 14px;
-            padding: 5px 20px;
-            color: #404040;
-            border-top: 2px solid #eeeeee;
-            background: #f8f8f8;
-          `}
-        >
-          Slate&apos;s value as text
-        </div>
-        <div
-          className={css`
-            color: #404040;
-            font: 12px monospace;
-            white-space: pre-wrap;
-            padding: 10px 20px;
-            div {
-              margin: 0 0 0.5em;
-            }
-          `}
-        >
-          {textLines}
-        </div>
+        Slate&apos;s value as text
       </div>
-    );
-  }
-);
+      <div
+        className={css`
+          color: #404040;
+          font: 12px monospace;
+          white-space: pre-wrap;
+          padding: 10px 20px;
+          div {
+            margin: 0 0 0.5em;
+          }
+        `}
+      >
+        {textLines}
+      </div>
+    </div>
+  );
+};
 
-export const Icon = ({ icon, ...props }: PropsWithChildren<BaseProps>) => {
+export const Icon = ({ icon, ...props }) => {
   return <div {...props}>{allIcons[icon]}</div>;
 };
 
-export const Instruction = React.forwardRef(
-  (
-    { className, ...props }: PropsWithChildren<BaseProps>,
-    ref: Ref<HTMLDivElement>
-  ) => (
-    <div
-      {...props}
-      ref={ref}
-      className={cx(
-        className,
-        css`
-          white-space: pre-wrap;
-          margin: 0 -20px 10px;
-          padding: 10px 20px;
-          font-size: 14px;
-          background: #f8f8e8;
-        `
-      )}
-    />
-  )
+export const Instruction = ({ className, ...props }) => (
+  <div
+    {...props}
+    ref={ref}
+    className={cx(
+      className,
+      css`
+        white-space: pre-wrap;
+        margin: 0 -20px 10px;
+        padding: 10px 20px;
+        font-size: 14px;
+        background: #f8f8e8;
+      `
+    )}
+  />
 );
 
-export const Menu = React.forwardRef(
-  (
-    { className, ...props }: PropsWithChildren<BaseProps>,
-    ref: Ref<HTMLDivElement>
-  ) => (
-    <div
-      {...props}
-      ref={ref}
-      className={cx(
-        className,
-        css`
-          & > * {
-            display: inline-block;
-          }
+export const Menu = ({ className, ...props }) => (
+  <div
+    {...props}
+    className={cx(
+      className,
+      css`
+        & > * {
+          display: inline-block;
+        }
 
-          & > * + * {
-            margin-left: 15px;
-          }
-        `
-      )}
-    />
-  )
+        & > * + * {
+          margin-left: 15px;
+        }
+      `
+    )}
+  />
 );
 
-export const Portal = ({ children }: { children: React.ReactNode }) => {
+export const Portal = ({ children }) => {
   return typeof document === "object"
     ? ReactDOM.createPortal(children, document.body)
     : null;
+};
+
+// Editor requirements
+
+export const HOTKEYS = {
+  "mod+b": "bold",
+  "mod+i": "italic",
+  "mod+u": "underline",
+  "mod+`": "code",
+};
+
+export const LIST_TYPES = ["numbered-list", "bulleted-list"];
+export const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
+
+export const toggleBlock = (editor, format) => {
+  const isActive = isBlockActive(
+    editor,
+    format,
+    TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
+  );
+  const isList = LIST_TYPES.includes(format);
+
+  Transforms.unwrapNodes(editor, {
+    match: (n) =>
+      !Editor.isEditor(n) &&
+      SlateElement.isElement(n) &&
+      LIST_TYPES.includes(n.type) &&
+      !TEXT_ALIGN_TYPES.includes(format),
+    split: true,
+  });
+  let newProperties;
+  if (TEXT_ALIGN_TYPES.includes(format)) {
+    newProperties = {
+      align: isActive ? undefined : format,
+    };
+  } else {
+    newProperties = {
+      type: isActive ? "paragraph" : isList ? "list-item" : format,
+    };
+  }
+  Transforms.setNodes(editor, newProperties);
+
+  if (!isActive && isList) {
+    const block = { type: format, children: [] };
+    Transforms.wrapNodes(editor, block);
+  }
+};
+
+export const toggleMark = (editor, format) => {
+  const isActive = isMarkActive(editor, format);
+
+  if (isActive) {
+    Editor.removeMark(editor, format);
+  } else {
+    Editor.addMark(editor, format, true);
+  }
+};
+
+export const isBlockActive = (editor, format, blockType = "type") => {
+  const { selection } = editor;
+  if (!selection) return false;
+
+  const [match] = Array.from(
+    Editor.nodes(editor, {
+      at: Editor.unhangRange(editor, selection),
+      match: (n) =>
+        !Editor.isEditor(n) &&
+        SlateElement.isElement(n) &&
+        n[blockType] === format,
+    })
+  );
+
+  return !!match;
+};
+
+export const isMarkActive = (editor, format) => {
+  const marks = Editor.marks(editor);
+  return marks ? marks[format] === true : false;
+};
+
+export const Element = ({ attributes, children, element }) => {
+  const style = { textAlign: element.align };
+  switch (element.type) {
+    case "code-block":
+      return (
+        <pre className="bg-gray-200/70" {...attributes} style={style}>
+          <code className="font-mono w-full px-2 block text-sm py-0.5">
+            {children}
+          </code>
+        </pre>
+      );
+    case "block-quote":
+      return (
+        <blockquote style={style} {...attributes}>
+          {children}
+        </blockquote>
+      );
+    case "bulleted-list":
+      return (
+        <ul style={style} {...attributes} className="list-disc list-inside">
+          {children}
+        </ul>
+      );
+    case "heading-one":
+      return (
+        <h1 style={style} className="text-4xl" {...attributes}>
+          {children}
+        </h1>
+      );
+    case "heading-two":
+      return (
+        <h2 style={style} className="text-2xl" {...attributes}>
+          {children}
+        </h2>
+      );
+    case "list-item":
+      return (
+        <li style={style} {...attributes}>
+          {children}
+        </li>
+      );
+    case "numbered-list":
+      return (
+        <ol style={style} {...attributes} className="list-decimal list-inside">
+          {children}
+        </ol>
+      );
+    default:
+      return (
+        <p style={style} {...attributes}>
+          {children}
+        </p>
+      );
+  }
+};
+
+export const Leaf = ({ attributes, children, leaf }) => {
+  if (leaf.bold) {
+    children = <strong>{children}</strong>;
+  }
+
+  if (leaf.code) {
+    children = <code className="font-mono bg-[#eee] p-[3px]">{children}</code>;
+  }
+
+  if (leaf.italic) {
+    children = <em>{children}</em>;
+  }
+
+  if (leaf.underline) {
+    children = <u>{children}</u>;
+  }
+
+  return <span {...attributes}>{children}</span>;
+};
+
+export const BlockButton = ({ format, icon }) => {
+  const editor = useSlate();
+  return (
+    <Button
+      active={isBlockActive(
+        editor,
+        format,
+        TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
+      )}
+      onMouseDown={(event) => {
+        event.preventDefault();
+        toggleBlock(editor, format);
+      }}
+    >
+      <Icon icon={icon} />
+    </Button>
+  );
+};
+
+export const MarkButton = ({ format, icon }) => {
+  const editor = useSlate();
+  return (
+    <Button
+      active={isMarkActive(editor, format)}
+      onMouseDown={(event) => {
+        event.preventDefault();
+        toggleMark(editor, format);
+      }}
+    >
+      <Icon icon={icon} />
+    </Button>
+  );
 };
