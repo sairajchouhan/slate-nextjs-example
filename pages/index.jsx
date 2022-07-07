@@ -1,5 +1,4 @@
 import RichTextEditor from "../components/Rte";
-import { Editable, Slate } from "slate-react";
 import PreviewRichText from "../components/PreviewRichText";
 import { useEffect, useState } from "react";
 

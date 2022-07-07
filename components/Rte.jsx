@@ -2,16 +2,21 @@ import React, { useCallback, useRef, useMemo } from "react";
 import dynamic from "next/dynamic";
 import isHotkey from "is-hotkey";
 import { Editable, withReact, useSlate, Slate } from "slate-react";
-import {
-  Editor,
-  Transforms,
-  createEditor,
-  Element as SlateElement,
-} from "slate";
+import { createEditor } from "slate";
 import { withHistory } from "slate-history";
 
-import { Button, Icon, HOTKEYS, TEXT_ALIGN_TYPES, toggleBlock, toggleMark, Element, Leaf, isBlockActive, isMarkActive } from "./RteComponents";
-
+import {
+  Button,
+  Icon,
+  HOTKEYS,
+  TEXT_ALIGN_TYPES,
+  toggleBlock,
+  toggleMark,
+  Element,
+  Leaf,
+  isBlockActive,
+  isMarkActive,
+} from "./RteComponents";
 
 const RichTextEditor = () => {
   const renderElement = useCallback((props) => <Element {...props} />, []);
@@ -40,7 +45,7 @@ const RichTextEditor = () => {
         const isAstChange = editor.operations.some(
           (op) => "set_selection" !== op.type
         );
-        console.log(value)
+        console.log(value);
         console.log("changed");
         if (isAstChange) {
           const content = JSON.stringify(value);
