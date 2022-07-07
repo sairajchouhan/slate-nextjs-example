@@ -1,4 +1,5 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useMemo } from "react";
+import dynamic from "next/dynamic";
 import isHotkey from "is-hotkey";
 import { Editable, withReact, useSlate, Slate } from "slate-react";
 import {
@@ -30,14 +31,38 @@ const RichTextExample = () => {
     editorRef.current = withHistory(withReact(createEditor()));
   const editor = editorRef.current;
 
+  const initialValue = useMemo(
+    () =>
+      JSON.parse(localStorage.getItem("content")) || [
+        {
+          type: "paragraph",
+          children: [{ text: "" }],
+        },
+      ],
+    []
+  );
+
   return (
-    <Slate editor={editor} value={initialValue}>
+    <Slate
+      editor={editor}
+      value={initialValue}
+      onChange={(value) => {
+        const isAstChange = editor.operations.some(
+          (op) => "set_selection" !== op.type
+        );
+        console.log("changed");
+        if (isAstChange) {
+          const content = JSON.stringify(value);
+          localStorage.setItem("content", content);
+        }
+      }}
+    >
       {/* <div className="absolute p-2 text-gray-400 focus-within:hidden">
         Enter your
       </div> */}
       <div className="ring-1 ring-gray-300 rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 relative">
         <Editable
-          className="overflow-scroll h-[200px] p-2 border-b border-dashed border-gray-300 focus:border-blue-400"
+          className="overflow-scroll h-[200px] p-2 border-b border-dashed border-gray-300 focus:border-blue-400 overflow-x-hidden"
           renderElement={renderElement}
           renderLeaf={renderLeaf}
           spellCheck={false}
@@ -249,11 +274,8 @@ const MarkButton = ({ format, icon }) => {
   );
 };
 
-const initialValue = [
-  {
-    type: "paragraph",
-    children: [{ text: "" }],
-  },
-];
+const NoSsrRte = dynamic(() => Promise.resolve(RichTextExample), {
+  ssr: false,
+});
 
-export default RichTextExample;
+export default NoSsrRte;
