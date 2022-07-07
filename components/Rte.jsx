@@ -43,12 +43,13 @@ const RichTextExample = () => {
         <BlockButton format="numbered-list" icon="format_list_numbered" />
         <BlockButton format="bulleted-list" icon="format_list_bulleted" />
       </Toolbar>
-      <div className="border-l border-b border-r p-2">
+      <div className="border-l border-b border-r">
         <Editable
-          className="min-h-[100px] max-h-[500px] overflow-scroll"
+          className="min-h-[100px] max-h-[500px] overflow-scroll focus:ring-2 focus:ring-blue-500 p-2"
           renderElement={renderElement}
           renderLeaf={renderLeaf}
           autoFocus
+          spellCheck={false}
           onKeyDown={(event) => {
             for (const hotkey in HOTKEYS) {
               if (isHotkey(hotkey, event)) {
@@ -131,13 +132,13 @@ const isMarkActive = (editor, format) => {
 };
 
 const Element = ({ attributes, children, element }) => {
-  console.log(attributes);
+  console.log(element);
   const style = { textAlign: element.align };
   switch (element.type) {
     case "code-block":
       return (
         <pre className="bg-gray-200/50" {...attributes} style={style}>
-          <code className="font-mono w-full px-1 block text-xs py-1">
+          <code className="font-mono w-full px-3 block text-xs py-1">
             {children}
           </code>
         </pre>
