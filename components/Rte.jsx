@@ -9,7 +9,6 @@ import {
   Element as SlateElement,
 } from "slate";
 import { withHistory } from "slate-history";
-import { css } from "@emotion/css";
 
 import { Button, Icon, Toolbar } from "./RteComponents";
 
@@ -44,22 +43,23 @@ const RichTextExample = () => {
         <BlockButton format="numbered-list" icon="format_list_numbered" />
         <BlockButton format="bulleted-list" icon="format_list_bulleted" />
       </Toolbar>
-      <Editable
-        renderPlaceholder={() => "this is a placeholder"}
-        renderElement={renderElement}
-        renderLeaf={renderLeaf}
-        placeholder="Enter some rich text…"
-        autoFocus
-        onKeyDown={(event) => {
-          for (const hotkey in HOTKEYS) {
-            if (isHotkey(hotkey, event)) {
-              event.preventDefault();
-              const mark = HOTKEYS[hotkey];
-              toggleMark(editor, mark);
+      <div className="border-l border-b border-r p-2">
+        <Editable
+          className="min-h-[100px] max-h-[500px] overflow-scroll"
+          renderElement={renderElement}
+          renderLeaf={renderLeaf}
+          autoFocus
+          onKeyDown={(event) => {
+            for (const hotkey in HOTKEYS) {
+              if (isHotkey(hotkey, event)) {
+                event.preventDefault();
+                const mark = HOTKEYS[hotkey];
+                toggleMark(editor, mark);
+              }
             }
-          }
-        }}
-      />
+          }}
+        />
+      </div>
     </Slate>
   );
 };
@@ -184,17 +184,7 @@ const Leaf = ({ attributes, children, leaf }) => {
   }
 
   if (leaf.code) {
-    children = (
-      <code
-        className={css`
-          font-family: monospace;
-          background-color: #eee;
-          padding: 3px;
-        `}
-      >
-        {children}
-      </code>
-    );
+    children = <code className="font-mono bg-[#eee] p-[3px]">{children}</code>;
   }
 
   if (leaf.italic) {
@@ -245,7 +235,7 @@ const MarkButton = ({ format, icon }) => {
 const initialValue = [
   {
     type: "paragraph",
-    children: [{ text: "This is editable " }],
+    children: [{ text: "" }],
   },
 ];
 

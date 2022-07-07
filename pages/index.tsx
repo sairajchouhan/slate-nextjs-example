@@ -3,37 +3,16 @@ import { cx, css } from "@emotion/css";
 import RichTextExample from "../components/Rte";
 
 const Wrapper = ({ className, ...props }: { className: string }) => (
-  <div
-    {...props}
-    className={cx(
-      className,
-      css`
-        max-width: 42em;
-        margin: 0 auto;
-        padding: 20px;
-      `
-    )}
-  />
+  <div {...props} className="max-w-2xl mx-auto p-5" />
 );
 
 const ExampleContent = (props: any) => (
-  <Wrapper
-    {...props}
-    className={css`
-      background: white;
-    `}
-  />
+  <Wrapper {...props} className="bg-white" />
 );
 
 const Home: NextPage = () => {
   return (
-    <div
-      className={css`
-        background-color: #f3f3f3;
-        min-height: 100vh;
-        padding-top: 100px;
-      `}
-    >
+    <div className="bg-[#f3f3f3] min-h-screen py-28">
       <ExampleContent>
         <RichTextExample />
       </ExampleContent>

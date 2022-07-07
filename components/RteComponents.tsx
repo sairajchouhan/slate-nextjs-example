@@ -8,7 +8,6 @@ interface BaseProps {
   icon: string;
   [key: string]: unknown;
 }
-type OrNull<T> = T | null;
 
 const FormatBold = ({ className, ...props }: { className: string }) => {
   return (
@@ -211,7 +210,7 @@ export const Button = React.forwardRef(
         reversed: boolean;
       } & BaseProps
     >,
-    ref: Ref<OrNull<HTMLSpanElement>>
+    ref: Ref<HTMLSpanElement>
   ) => (
     <span
       {...props}
@@ -244,10 +243,10 @@ export const EditorValue = React.forwardRef(
         value: any;
       } & BaseProps
     >,
-    ref: Ref<OrNull<null>>
+    ref: Ref<HTMLDivElement>
   ) => {
     const textLines = value.document.nodes
-      .map((node) => node.text)
+      .map((node: any) => node.text)
       .toArray()
       .join("\n");
     return (
@@ -293,7 +292,7 @@ export const EditorValue = React.forwardRef(
 export const Icon = React.forwardRef(
   (
     { className, icon, ...props }: PropsWithChildren<BaseProps>,
-    ref: Ref<OrNull<HTMLSpanElement>>
+    ref: Ref<HTMLSpanElement>
   ) => {
     return (
       <span
@@ -315,7 +314,7 @@ export const Icon = React.forwardRef(
 export const Instruction = React.forwardRef(
   (
     { className, ...props }: PropsWithChildren<BaseProps>,
-    ref: Ref<OrNull<HTMLDivElement>>
+    ref: Ref<HTMLDivElement>
   ) => (
     <div
       {...props}
@@ -337,7 +336,7 @@ export const Instruction = React.forwardRef(
 export const Menu = React.forwardRef(
   (
     { className, ...props }: PropsWithChildren<BaseProps>,
-    ref: Ref<OrNull<HTMLDivElement>>
+    ref: Ref<HTMLDivElement>
   ) => (
     <div
       {...props}
@@ -367,22 +366,12 @@ export const Portal = ({ children }: { children: React.ReactNode }) => {
 export const Toolbar = React.forwardRef(
   (
     { className, ...props }: PropsWithChildren<BaseProps>,
-    ref: Ref<OrNull<HTMLDivElement>>
+    ref: Ref<HTMLDivElement>
   ) => (
     <Menu
       {...props}
       ref={ref}
-      className={cx(
-        className,
-        css`
-          position: relative;
-          padding: 1px 18px 17px;
-          margin: 0 -20px;
-          border-bottom: 2px solid #eee;
-          margin-bottom: 20px;
-          width: full;
-        `
-      )}
+      className="px-2 py-3 border flex items-center bg-gray-100"
     />
   )
 );
